@@ -10,9 +10,12 @@ add_subdirectory(external/glfw)
 add_executable(AtmosphericScattering
 	src/main.cpp
 	external/glad/src/gl.c
+    src/core/Shader.cpp
+)
 
+file(COPY ${CMAKE_SOURCE_DIR}/src/shaders
+     DESTINATION ${CMAKE_BINARY_DIR})
 
- )
 
 target_include_directories(AtmosphericScattering PRIVATE
 	
