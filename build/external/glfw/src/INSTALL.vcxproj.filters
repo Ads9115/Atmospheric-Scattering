@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\adars\source\repos\Atmospheric Scattering\build\CMakeFiles\28168bef8c0a17d83b8d34dec9bc58dd\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{37D1EF56-BF67-393E-B667-B52652B8EE30}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
