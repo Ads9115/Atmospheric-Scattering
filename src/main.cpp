@@ -7,6 +7,11 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "core/Shader.h"
+#include "core/Window.h"
+#include "scene/Camera.h"
+#include "scene/Transform.h"
+#include "graphic/Mesh.h"
+#include "graphic/Renderer.h"
 
 int SCR_WIDTH = 800;
 int SCR_HEIGHT = 600;
@@ -46,127 +51,66 @@ unsigned int indices[] = {
 	1, 0, 4
 };
 
-void processInput(GLFWwindow* window, glm::vec3& cameraPos, const glm::vec3& cameraFront, const glm::vec3& cameraUp, float deltaTime) {
+void processInput(GLFWwindow* window,Camera& camera, float deltaTime) {
 
 	float cameraSpeed = 2.5f * deltaTime;
 
-	glm::vec3 cameraRight = glm::normalize(glm::cross(cameraFront, cameraUp));
-
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		cameraPos += cameraSpeed * cameraFront;
+		camera.moveForward(cameraSpeed);
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		cameraPos -= cameraSpeed * cameraFront;
+		camera.moveForward(-cameraSpeed);
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		cameraPos -= cameraRight * cameraSpeed;
+		camera.moveRight(-cameraSpeed);
 
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		cameraPos += cameraRight * cameraSpeed;
+		camera.moveRight(cameraSpeed);
 }
 
-void frame_buffer_sizecallback(GLFWwindow* window, int width, int height) {
 
-	glViewport(0, 0, width, height);
-}
 
 int main() {
 	
-	glfwInit();
-
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Atmospheric Scattering", NULL, NULL);
-
-	glfwMakeContextCurrent(window);
-	glfwSetFramebufferSizeCallback(window, frame_buffer_sizecallback);
-
-	if (!gladLoaderLoadGL()) {
-		std::cerr << "Failed to initialize GLAD\n";
-		return -1;
-	}
-	glEnable(GL_DEPTH_TEST);
-
-	std::cout << std::filesystem::current_path() << '\n';
+	Window window(SCR_WIDTH, SCR_HEIGHT, "Atmospheric Scattering");
 	Shader shader(SHADER_DIR "vertexShader.vert",SHADER_DIR "fragmentShader.frag");
-
-	GLuint VAO, VBO, EBO;
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
-
-	glBindVertexArray(VAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	// Position
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// Color
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
-
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-	float rotation = 0.0f;
+	Mesh cube(vertices, sizeof(vertices), indices, sizeof(indices));
+	Transform cubeTransform;
 
 	float deltaTime = 0.0f;
 	float lastFrame = 0.0f;
 
-	
+	Camera camera;
+	Renderer renderer;
 
-	while (!glfwWindowShouldClose(window)) {
 
-		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-			glfwSetWindowShouldClose(window, true);
+	while (window.isOpen()) {
+
+		if (glfwGetKey(window.getNativeWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
+			glfwSetWindowShouldClose(window.getNativeWindow(), true);
 
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
-		rotation += deltaTime;
+		cubeTransform.rotation.y += 50.0f * deltaTime;
+		camera.setAspect(
+			float(window.getWidth()) /
+			float(window.getHeight())
+		);
 
-		processInput(window, cameraPos, cameraFront, cameraUp, deltaTime);
+		processInput(window.getNativeWindow(), camera, deltaTime);
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		renderer.draw(shader, cube, cubeTransform, camera);
 
-		shader.use();
-
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::rotate(model, rotation * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-		shader.setMat4("model", model);
-
-		glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-		shader.setMat4("view", view);
-
-		glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-		shader.setMat4("projection", projection);
-
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-
-
-		glfwSwapBuffers(window);
-		glfwPollEvents();
+		window.swapBuffers();
+		window.pollEvents();
+		
+		
 	}
 
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
-	glDeleteBuffers(1, &EBO);
-
-	glfwTerminate();
 	return 0;
 	
 }
