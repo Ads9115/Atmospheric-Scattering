@@ -13,8 +13,9 @@ add_executable(AtmosphericScattering
     src/core/Shader.cpp
 )
 
-file(COPY ${CMAKE_SOURCE_DIR}/src/shaders
-     DESTINATION ${CMAKE_BINARY_DIR})
+target_compile_definitions(AtmosphericScattering PRIVATE
+    SHADER_DIR="${CMAKE_SOURCE_DIR}/src/shaders/"
+)
 
 
 target_include_directories(AtmosphericScattering PRIVATE

@@ -46,6 +46,24 @@ unsigned int indices[] = {
 	1, 0, 4
 };
 
+void processInput(GLFWwindow* window, glm::vec3& cameraPos, const glm::vec3& cameraFront, const glm::vec3& cameraUp, float deltaTime) {
+
+	float cameraSpeed = 2.5f * deltaTime;
+
+	glm::vec3 cameraRight = glm::normalize(glm::cross(cameraFront, cameraUp));
+
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		cameraPos += cameraSpeed * cameraFront;
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		cameraPos -= cameraSpeed * cameraFront;
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		cameraPos -= cameraRight * cameraSpeed;
+
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		cameraPos += cameraRight * cameraSpeed;
+}
 
 void frame_buffer_sizecallback(GLFWwindow* window, int width, int height) {
 
@@ -69,9 +87,10 @@ int main() {
 		std::cerr << "Failed to initialize GLAD\n";
 		return -1;
 	}
+	glEnable(GL_DEPTH_TEST);
 
 	std::cout << std::filesystem::current_path() << '\n';
-	Shader shader("shaders/vertexShader.vert", "shaders/fragmentShader.frag");
+	Shader shader(SHADER_DIR "vertexShader.vert",SHADER_DIR "fragmentShader.frag");
 
 	GLuint VAO, VBO, EBO;
 	glGenVertexArrays(1, &VAO);
@@ -97,7 +116,13 @@ int main() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	;
+	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+	float rotation = 0.0f;
+
+	float deltaTime = 0.0f;
+	float lastFrame = 0.0f;
 
 	
 
@@ -106,6 +131,12 @@ int main() {
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, true);
 
+		float currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+		rotation += deltaTime;
+
+		processInput(window, cameraPos, cameraFront, cameraUp, deltaTime);
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -114,10 +145,10 @@ int main() {
 		shader.use();
 
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+		model = glm::rotate(model, rotation * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 		shader.setMat4("model", model);
 
-		glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 		shader.setMat4("view", view);
 
 		glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);

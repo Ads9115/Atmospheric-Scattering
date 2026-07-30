@@ -56,6 +56,8 @@ void Shader::use() const
 
 void Shader::setMat4(std::string string, glm::mat4 mat4)
 {
+	/*GLint location = glGetUniformLocation(shaderID, string.c_str());
+	std::cout << string << " : " << location << '\n';*/
 	glUniformMatrix4fv(glGetUniformLocation(shaderID, string.c_str()), 1, GL_FALSE, &mat4[0][0]);
 }
 
