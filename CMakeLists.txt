@@ -20,8 +20,8 @@ file(COPY ${CMAKE_SOURCE_DIR}/src/shaders
 target_include_directories(AtmosphericScattering PRIVATE
 	
 	external/glad/include
-	external/glfw/inlcude
-	external/glm
+	external/glfw/include
+	external/
 )
 
 target_link_libraries(AtmosphericScattering PRIVATE glfw)

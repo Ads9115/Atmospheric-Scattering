@@ -1,23 +1,49 @@
-#include<iostream>
+#include <iostream>
 #include <filesystem>
-#include<glad/gl.h>
-#include<GLFW/glfw3.h>
-#include<glm.hpp>
+#include <glad/gl.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
-#include"core/Shader.h"
+#include "core/Shader.h"
 
+int SCR_WIDTH = 800;
+int SCR_HEIGHT = 600;
 
 float vertices[] = {
 	// Positions          // Colors
-	 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,  // 0: Top-Right (Red)
-	 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,  // 1: Bottom-Right (Green)
-	-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,  // 2: Bottom-Left (Blue)
-	-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f   // 3: Top-Left (Yellow)
+	// Front Face
+	-0.5f, -0.5f,  0.5f,   1.0f, 1.0f, 0.0f, // 0: Bottom-Left-Front (Red)
+	 0.5f, -0.5f,  0.5f,   1.0f, 1.0f, 0.0f, // 1: Bottom-Right-Front (Green)
+	 0.5f,  0.5f,  0.5f,   1.0f, 1.0f, 0.0f, // 2: Top-Right-Front (Blue)
+	-0.5f,  0.5f,  0.5f,   1.0f, 1.0f, 0.0f, // 3: Top-Left-Front (Yellow)
+	// Back Face		   
+	-0.5f, -0.5f, -0.5f,   1.0f, 1.0f, 0.0f, // 4: Bottom-Left-Back (Magenta)
+	 0.5f, -0.5f, -0.5f,   1.0f, 1.0f, 0.0f, // 5: Bottom-Right-Back (Cyan)
+	 0.5f,  0.5f, -0.5f,   1.0f, 1.0f, 0.0f, // 6: Top-Right-Back (White)
+	-0.5f,  0.5f, -0.5f,   1.0f, 1.0f, 0.0f, // 7: Top-Left-Back (Black)
 };
 
 unsigned int indices[] = {
-	0, 1, 3,  // First Triangle (Top-Right half)
-	1, 2, 3   // Second Triangle (Bottom-Left half)
+	// Front Face (Counter-Clockwise)
+	0, 1, 2,
+	2, 3, 0,
+	// Right Face
+	1, 5, 6,
+	6, 2, 1,
+	// Back Face
+	5, 4, 7,
+	7, 6, 5,
+	// Left Face
+	4, 0, 3,
+	3, 7, 4,
+	// Top Face
+	3, 2, 6,
+	6, 7, 3,
+	// Bottom Face
+	4, 5, 1,
+	1, 0, 4
 };
 
 
@@ -34,7 +60,7 @@ int main() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "Atmospheric Scattering", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Atmospheric Scattering", NULL, NULL);
 
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, frame_buffer_sizecallback);
@@ -71,7 +97,9 @@ int main() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	glViewport(0, 0, 800, 600);
+	;
+
+	
 
 	while (!glfwWindowShouldClose(window)) {
 
@@ -79,11 +107,24 @@ int main() {
 			glfwSetWindowShouldClose(window, true);
 
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
 		shader.use();
+
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+		shader.setMat4("model", model);
+
+		glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		shader.setMat4("view", view);
+
+		glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+		shader.setMat4("projection", projection);
+
 		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
 
 		glfwSwapBuffers(window);
