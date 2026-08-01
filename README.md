@@ -1,5 +1,7 @@
 # Atmospheric Scattering
 
+<img width="633" height="306" alt="Image" src="https://github.com/user-attachments/assets/1a3bb799-6211-445b-9485-8b23d3b69dd4" />
+
 Real-time atmospheric scattering in OpenGL using a fullscreen ray-marched sky pass.
 
 The renderer models the planet and atmosphere as concentric spheres and computes single scattering in the fragment shader. It currently supports Rayleigh scattering, Mie scattering, sun-ray transmittance, tone mapping, and an animated sun direction.
