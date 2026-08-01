@@ -37,7 +37,7 @@ void Camera::moveRight(float amount)
 	position += right * amount;
 }
 
-glm::vec3& Camera::getPosition()
+const glm::vec3& Camera::getPosition() const
 {
 	return position;
 }

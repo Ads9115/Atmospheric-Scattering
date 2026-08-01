@@ -15,7 +15,7 @@ public:
 	void moveForward(float amount);
 	void moveRight(float amount);
 
-	glm::vec3& getPosition();
+	const glm::vec3& getPosition() const;
 
 private:
 	glm::vec3 position;
