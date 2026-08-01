@@ -16,39 +16,19 @@
 int SCR_WIDTH = 800;
 int SCR_HEIGHT = 600;
 
-float vertices[] = {
-	// Positions          // Colors
-	// Front Face
-	-0.5f, -0.5f,  0.5f,   1.0f, 1.0f, 0.0f, // 0: Bottom-Left-Front (Red)
-	 0.5f, -0.5f,  0.5f,   1.0f, 1.0f, 0.0f, // 1: Bottom-Right-Front (Green)
-	 0.5f,  0.5f,  0.5f,   1.0f, 1.0f, 0.0f, // 2: Top-Right-Front (Blue)
-	-0.5f,  0.5f,  0.5f,   1.0f, 1.0f, 0.0f, // 3: Top-Left-Front (Yellow)
-	// Back Face		   
-	-0.5f, -0.5f, -0.5f,   1.0f, 1.0f, 0.0f, // 4: Bottom-Left-Back (Magenta)
-	 0.5f, -0.5f, -0.5f,   1.0f, 1.0f, 0.0f, // 5: Bottom-Right-Back (Cyan)
-	 0.5f,  0.5f, -0.5f,   1.0f, 1.0f, 0.0f, // 6: Top-Right-Back (White)
-	-0.5f,  0.5f, -0.5f,   1.0f, 1.0f, 0.0f, // 7: Top-Left-Back (Black)
+float vertices[] =
+{
+	// x, y
+	-1.0f, -1.0f, // Bottom-left
+	 1.0f, -1.0f, // Bottom-right
+	 1.0f,  1.0f, // Top-right
+	-1.0f,  1.0f  // Top-left
 };
 
-unsigned int indices[] = {
-	// Front Face (Counter-Clockwise)
+unsigned int indices[] =
+{
 	0, 1, 2,
-	2, 3, 0,
-	// Right Face
-	1, 5, 6,
-	6, 2, 1,
-	// Back Face
-	5, 4, 7,
-	7, 6, 5,
-	// Left Face
-	4, 0, 3,
-	3, 7, 4,
-	// Top Face
-	3, 2, 6,
-	6, 7, 3,
-	// Bottom Face
-	4, 5, 1,
-	1, 0, 4
+	2, 3, 0
 };
 
 void processInput(GLFWwindow* window,Camera& camera, float deltaTime) {
@@ -73,8 +53,8 @@ void processInput(GLFWwindow* window,Camera& camera, float deltaTime) {
 int main() {
 	
 	Window window(SCR_WIDTH, SCR_HEIGHT, "Atmospheric Scattering");
-	Shader shader(SHADER_DIR "vertexShader.vert",SHADER_DIR "fragmentShader.frag");
-	Mesh cube(vertices, sizeof(vertices), indices, sizeof(indices));
+	Shader shader(SHADER_DIR "sky.vert",SHADER_DIR "sky.frag");
+	Mesh quad(vertices, sizeof(vertices), indices, sizeof(indices));
 	Transform cubeTransform;
 
 	float deltaTime = 0.0f;
@@ -103,7 +83,7 @@ int main() {
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		renderer.draw(shader, cube, cubeTransform, camera);
+		renderer.draw(shader, quad, cubeTransform, camera);
 
 		window.swapBuffers();
 		window.pollEvents();
