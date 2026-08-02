@@ -40,7 +40,7 @@ void Renderer::draw(Shader& shader, const Mesh& mesh, const Transform& transform
 	shader.setInt("lightSamples", 8);
 	shader.setFloat("betaM", 21.0e-3f);
 	shader.setFloat("Hm", 1.2f);
-	shader.setFloat("mieG", 0.888f);
+	shader.setFloat("mieG", 0.995f);
 	shader.setFloat("exposure", 0.5f);
 
 

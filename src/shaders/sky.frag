@@ -68,14 +68,8 @@ void main()
 
     bool hitGround = RaySphereIntersection(cameraPos, rayDir, groundRadius, tGround0, tGround1);
 
-    if (hitGround && tGround0 > 0.0)
-  {
-      FragColor = vec4(0.03, 0.025, 0.02, 1.0);
-      return;
-  }
-
     float tStart = 0.0;
-    float tEnd = tAtmosphere1;
+    float tEnd = (hitGround && tGround0 > 0.0) ? tGround0 : tAtmosphere1;
 
     
 
@@ -142,16 +136,36 @@ void main()
       vec3(betaM) * phaseM * accumulatedM
     );
 
+    if (hitGround && tGround0 > 0.0) {
+        vec3 groundPos = cameraPos + rayDir * tGround0;
+        vec3 normal = normalize(groundPos);
+        float nDotL = max(dot(normal, sunDirection), 0.0);
+        
+        float tLight0, tLight1;
+        RaySphereIntersection(groundPos, sunDirection, atmosphereRadius, tLight0, tLight1);
+        
+        float lightSegmentLength = tLight1 / float(lightSamples);
+        float lightOpticalDepthR = 0.0;
+        float lightOpticalDepthM = 0.0;
+        
+        for (int j = 0; j < lightSamples; ++j) {
+            float tLight = (float(j) + 0.5) * lightSegmentLength;
+            vec3 lightSamplePos = groundPos + sunDirection * tLight;
+            float lightHeight = length(lightSamplePos) - groundRadius;
+            lightOpticalDepthR += exp(-lightHeight / Hr) * lightSegmentLength;
+            lightOpticalDepthM += exp(-lightHeight / Hm) * lightSegmentLength;
+        }
+        
+        vec3 sunTransmittance = exp(-(betaR * lightOpticalDepthR + vec3(betaM * 1.1) * lightOpticalDepthM));
+        vec3 groundAlbedo = vec3(0.005, 0.005, 0.005); // Very dark ground color to look more like natural earth/silhouette
+        vec3 groundRadiance = groundAlbedo * sunIntensity * nDotL * sunTransmittance;
+        vec3 cameraToGroundTransmittance = exp(-(betaR * opticalDepthR + vec3(betaM * 1.1) * opticalDepthM));
+        
+        color += groundRadiance * cameraToGroundTransmittance;
+    }
 
     color = 1.0 - exp(-color * exposure);
     color = pow(color, vec3(1.0 / 2.2));
     color = clamp(color, 0.0, 1.0);
     FragColor = vec4(color, 1.0);
-    
-
-
-
-
 }
-
-
