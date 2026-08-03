@@ -13,8 +13,8 @@
 #include "graphic/Mesh.h"
 #include "graphic/Renderer.h"
 
-int SCR_WIDTH = 800;
-int SCR_HEIGHT = 600;
+int SCR_WIDTH = 1920;
+int SCR_HEIGHT = 1080;
 
 float vertices[] =
 {
@@ -62,7 +62,8 @@ int main() {
 
 	Camera camera;
 	Renderer renderer;
-
+	renderer.Init(window.getNativeWindow());
+	
 
 	while (window.isOpen()) {
 

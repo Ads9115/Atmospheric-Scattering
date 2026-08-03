@@ -68,14 +68,8 @@ void main()
 
     bool hitGround = RaySphereIntersection(cameraPos, rayDir, groundRadius, tGround0, tGround1);
 
-    if (hitGround && tGround0 > 0.0)
-  {
-      FragColor = vec4(0.03, 0.025, 0.02, 1.0);
-      return;
-  }
-
     float tStart = 0.0;
-    float tEnd = tAtmosphere1;
+    float tEnd = (hitGround && tGround0 > 0.0) ? tGround0 : tAtmosphere1;
 
     
 
@@ -133,25 +127,53 @@ void main()
 
     float mu = dot(rayDir, sunDirection);
     float phaseR = (3.0 / (16.0 * PI)) * (1.0 + mu * mu);
-    float phaseM = (3.0 / (8.0 * PI)) *
-                 ((1.0 - mieG * mieG) * (1.0 + mu * mu)) /
-                 ((2.0 + mieG * mieG) * pow(1.0 + mieG * mieG - 2.0 * mieG * mu, 1.5));
+    
+    // Dual-Lobe Mie Phase Function:
+    // We combine a very sharp peak (g = 0.995) for the bright sun core
+    // with a softer, wider halo (g = 0.8) to create the soft horizon bleed!
+    float g1 = 0.995;
+    float phaseM1 = (3.0 / (8.0 * PI)) * ((1.0 - g1 * g1) * (1.0 + mu * mu)) / ((2.0 + g1 * g1) * pow(1.0 + g1 * g1 - 2.0 * g1 * mu, 1.5));
+    
+    float g2 = 0.80;
+    float phaseM2 = (3.0 / (8.0 * PI)) * ((1.0 - g2 * g2) * (1.0 + mu * mu)) / ((2.0 + g2 * g2) * pow(1.0 + g2 * g2 - 2.0 * g2 * mu, 1.5));
+    
+    float phaseM = mix(phaseM1, phaseM2, 0.5); // Blend them 50/50
 
     vec3 color = sunIntensity * (
       betaR * phaseR * accumulatedR +
       vec3(betaM) * phaseM * accumulatedM
     );
 
+    if (hitGround && tGround0 > 0.0) {
+        vec3 groundPos = cameraPos + rayDir * tGround0;
+        vec3 normal = normalize(groundPos);
+        float nDotL = max(dot(normal, sunDirection), 0.0);
+        
+        float tLight0, tLight1;
+        RaySphereIntersection(groundPos, sunDirection, atmosphereRadius, tLight0, tLight1);
+        
+        float lightSegmentLength = tLight1 / float(lightSamples);
+        float lightOpticalDepthR = 0.0;
+        float lightOpticalDepthM = 0.0;
+        
+        for (int j = 0; j < lightSamples; ++j) {
+            float tLight = (float(j) + 0.5) * lightSegmentLength;
+            vec3 lightSamplePos = groundPos + sunDirection * tLight;
+            float lightHeight = length(lightSamplePos) - groundRadius;
+            lightOpticalDepthR += exp(-lightHeight / Hr) * lightSegmentLength;
+            lightOpticalDepthM += exp(-lightHeight / Hm) * lightSegmentLength;
+        }
+        
+        vec3 sunTransmittance = exp(-(betaR * lightOpticalDepthR + vec3(betaM * 1.1) * lightOpticalDepthM));
+        vec3 groundAlbedo = vec3(0.0); // Completely black silhouette ground
+        vec3 groundRadiance = groundAlbedo * sunIntensity * nDotL * sunTransmittance;
+        vec3 cameraToGroundTransmittance = exp(-(betaR * opticalDepthR + vec3(betaM * 1.1) * opticalDepthM));
+        
+        color += groundRadiance * cameraToGroundTransmittance;
+    }
 
     color = 1.0 - exp(-color * exposure);
     color = pow(color, vec3(1.0 / 2.2));
     color = clamp(color, 0.0, 1.0);
     FragColor = vec4(color, 1.0);
-    
-
-
-
-
 }
-
-

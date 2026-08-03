@@ -2,8 +2,8 @@
 
 Camera::Camera()
 {
-	position = glm::vec3(0.0f, 6372.0f, 0.0f);
-	front = glm::vec3(0.0f, 0.0f, -1.0f);
+	position = glm::vec3(0.0f, 6371.5f, 0.0f); // Closer to ground (500m up)
+	front = glm::normalize(glm::vec3(0.0f, 0.15f, -1.0f)); // Tilted slightly upward
 	up = glm::vec3(0.0f, 1.0f, 0.0f);
 
 	fov = glm::radians(45.0f);

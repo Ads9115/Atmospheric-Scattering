@@ -86,7 +86,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BufferSecurityCheck></BufferSecurityCheck>
@@ -111,10 +111,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;SHADER_DIR=\"C:/Users/adars/source/repos/Atmospheric Scattering/src/shaders/\";CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -141,7 +141,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <BufferSecurityCheck></BufferSecurityCheck>
@@ -167,10 +167,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;SHADER_DIR=\"C:/Users/adars/source/repos/Atmospheric Scattering/src/shaders/\";CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -197,7 +197,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <BufferSecurityCheck></BufferSecurityCheck>
@@ -223,10 +223,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;SHADER_DIR=\"C:/Users/adars/source/repos/Atmospheric Scattering/src/shaders/\";CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -253,7 +253,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <BufferSecurityCheck></BufferSecurityCheck>
@@ -278,10 +278,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;SHADER_DIR=\"C:/Users/adars/source/repos/Atmospheric Scattering/src/shaders/\";CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\glfw\include;C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui;C:\Users\adars\source\repos\Atmospheric Scattering\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -367,18 +367,19 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\main.cpp" />
     <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\external\glad\src\gl.c" />
     <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\core\Shader.cpp" />
-    <ClInclude Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\core\Window.h" />
     <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\core\Window.cpp" />
     <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\scene\Camera.cpp" />
-    <ClInclude Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\scene\Camera.h" />
-    <ClInclude Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\scene\Transform.h" />
     <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\scene\Transform.cpp" />
-    <ClInclude Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\graphic\Mesh.h" />
     <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\graphic\Mesh.cpp" />
-    <ClInclude Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\graphic\Renderer.h" />
     <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\graphic\Renderer.cpp" />
-    <ClInclude Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\core\Input.h" />
     <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\core\Input.cpp" />
+    <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui\imgui.cpp" />
+    <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui\imgui_demo.cpp" />
+    <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui\imgui_draw.cpp" />
+    <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui\imgui_tables.cpp" />
+    <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui\imgui_impl_opengl3.cpp" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
