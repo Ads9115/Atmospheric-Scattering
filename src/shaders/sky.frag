@@ -127,9 +127,17 @@ void main()
 
     float mu = dot(rayDir, sunDirection);
     float phaseR = (3.0 / (16.0 * PI)) * (1.0 + mu * mu);
-    float phaseM = (3.0 / (8.0 * PI)) *
-                 ((1.0 - mieG * mieG) * (1.0 + mu * mu)) /
-                 ((2.0 + mieG * mieG) * pow(1.0 + mieG * mieG - 2.0 * mieG * mu, 1.5));
+    
+    // Dual-Lobe Mie Phase Function:
+    // We combine a very sharp peak (g = 0.995) for the bright sun core
+    // with a softer, wider halo (g = 0.8) to create the soft horizon bleed!
+    float g1 = 0.995;
+    float phaseM1 = (3.0 / (8.0 * PI)) * ((1.0 - g1 * g1) * (1.0 + mu * mu)) / ((2.0 + g1 * g1) * pow(1.0 + g1 * g1 - 2.0 * g1 * mu, 1.5));
+    
+    float g2 = 0.80;
+    float phaseM2 = (3.0 / (8.0 * PI)) * ((1.0 - g2 * g2) * (1.0 + mu * mu)) / ((2.0 + g2 * g2) * pow(1.0 + g2 * g2 - 2.0 * g2 * mu, 1.5));
+    
+    float phaseM = mix(phaseM1, phaseM2, 0.5); // Blend them 50/50
 
     vec3 color = sunIntensity * (
       betaR * phaseR * accumulatedR +
@@ -157,7 +165,7 @@ void main()
         }
         
         vec3 sunTransmittance = exp(-(betaR * lightOpticalDepthR + vec3(betaM * 1.1) * lightOpticalDepthM));
-        vec3 groundAlbedo = vec3(0.005, 0.005, 0.005); // Very dark ground color to look more like natural earth/silhouette
+        vec3 groundAlbedo = vec3(0.0); // Completely black silhouette ground
         vec3 groundRadiance = groundAlbedo * sunIntensity * nDotL * sunTransmittance;
         vec3 cameraToGroundTransmittance = exp(-(betaR * opticalDepthR + vec3(betaM * 1.1) * opticalDepthM));
         

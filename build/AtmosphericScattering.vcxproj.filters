@@ -28,34 +28,32 @@
     <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\core\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\core\Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\scene\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\scene\Transform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\graphic\Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\graphic\Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\adars\source\repos\Atmospheric Scattering\src\core\Input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui\imgui_tables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui\imgui_impl_glfw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\adars\source\repos\Atmospheric Scattering\external\imgui\imgui_impl_opengl3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\adars\source\repos\Atmospheric Scattering\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{ED682301-EB9B-3EDF-B4FF-D8DF9FC4ED7B}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{EB51E9DA-AFE2-3D7F-A38F-E30A1178E840}</UniqueIdentifier>
     </Filter>
