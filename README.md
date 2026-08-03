@@ -1,6 +1,6 @@
 # Atmospheric Scattering
 
-<img width="633" height="306" alt="Image" src="https://github.com/user-attachments/assets/1a3bb799-6211-445b-9485-8b23d3b69dd4" />
+<img width="1523" height="779" alt="Image" src="https://github.com/user-attachments/assets/f45c55cd-c87f-4d27-8f68-d57874dc1a1a" />
 
 Real-time atmospheric scattering in OpenGL using a fullscreen ray-marched sky pass.
 
