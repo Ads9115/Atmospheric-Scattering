@@ -143,26 +143,6 @@ Rayleigh contribution + Mie contribution
 
 then exposure tone mapping and gamma correction.
 
-## Known Limitations
-
-- No real terrain yet
-- No clouds
-- No stars
-- No moon
-- No multiple scattering
-- Placeholder ground color only
-- `Renderer::draw()` currently contains sky-specific uniform uploads
-- No ImGui UI yet
-
-## Next Improvements
-
-- Add ImGui controls for atmosphere parameters
-- Split sky rendering from generic mesh rendering
-- Add mouse-look camera controls
-- Replace placeholder ground with a shaded planet or terrain
-- Add optional sun disk control if desired
-- Add screenshot comparisons for tuning
-
 ## References
 
 - Nishita et al. atmospheric scattering model
